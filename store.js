@@ -271,3 +271,8 @@ renderProducts = function (list) {
   originalRenderProducts(list);
   enableProductModals(); // ahora cada render agrega eventos a imágenes
 };
+
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+
+init();
