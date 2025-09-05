@@ -222,4 +222,22 @@ function openProductModal(product) { // esta es la funcion que hace lo de vaer m
   modal.style.display = "flex";
 }
 
+// Cerrar modal
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+// Botón "Agregar al carrito" dentro del modal
+modalAddBtn.addEventListener("click", () => {
+  if (currentProductId) {
+    addToCart(currentProductId); // usa tu función existente
+    alert("Producto agregado al carrito 🛒");
+  }
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});
 
