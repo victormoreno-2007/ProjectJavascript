@@ -1,9 +1,13 @@
 const API = 'https://fakestoreapi.com/products';
 
+let cart = {},products = [],currentProductId = null;
+
+const $ = id => document.getElementById(id);
+
 function fetchProducts() {
   return fetch(API).then(res => res.json()); // trae los productos de la api
 }
-let cart = {};
+
 
 function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart)); //guarda los datos en el navegador en string
@@ -176,6 +180,17 @@ function setupBuyNow() {
     $('cart').classList.add('hidden');
   });
 }
+async function init() {
+  setupCartToggle(); //configura abrir/cerrar carrito.
+  loadCart(); //carga el carrito del localStorage.
+  products = await fetchProducts(); //descarga productos de la API.
+  renderProducts(products);//los dibuja en pantalla.
+  setupFilters();//activa los filtros.
+  setupBuyNow();//activa el botón comprar.
+}
+
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
 
 const modal = document.getElementById("productModal");
 const closeBtn = document.querySelector(".close-btn");
@@ -191,14 +206,14 @@ const desc = document.getElementById("desc-producto");
 const toggleBtn = document.getElementById("toggle-desc");
 const modalAddBtn = document.getElementById("modal-add");
 
-async function init() {
-  setupCartToggle(); //configura abrir/cerrar carrito.
-  loadCart(); //carga el carrito del localStorage.
-  products = await fetchProducts(); //descarga productos de la API.
-  renderProducts(products);//los dibuja en pantalla.
-  setupFilters();//activa los filtros.
-  setupBuyNow();//activa el botón comprar.
-}
+toggleBtn.addEventListener("click", () => {
+  desc.classList.toggle("expanded");
+  if (desc.classList.contains("expanded")) { // para la opcion en la tarjeta de ver mas o menos
+    toggleBtn.textContent = "Ver menos";
+  } else {
+    toggleBtn.textContent = "Ver más";
+  }
+});
 
 function openProductModal(product) { // esta es la funcion que hace lo de vaer mas o menos
   modalImg.src = product.image;
@@ -272,7 +287,6 @@ renderProducts = function (list) {
   enableProductModals(); // ahora cada render agrega eventos a imágenes
 };
 
-window.addToCart = addToCart;
-window.removeFromCart = removeFromCart;
+
 
 init();
