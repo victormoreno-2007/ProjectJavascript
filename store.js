@@ -138,3 +138,14 @@ function applyFilters() {
   renderProducts(list);
 }
 
+function setupCartToggle() {
+  $('cart-btn').addEventListener('click', () => { //abre carrito o cierra
+    $('cart').classList.toggle('hidden-modal');
+  });
+
+  $('close-cart').addEventListener('click', () => { // al hacer clic en el cerrar se ocuelte
+    $('cart').classList.add('hidden-modal');
+    console.log('ak{sdñlfklñaksfj')
+  });
+}
+
