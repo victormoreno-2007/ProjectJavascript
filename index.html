@@ -8,7 +8,22 @@
     <link rel="icon" type="image/png" href="logo-Fakestore.png">
 </head>
 <body>
-    
+    <header class="header">
+        <h1 id="titulo" class="titulo">ALMACEN LAS 3B</h1>
+        <div class="opcion">
+            <input id="search" type="text" placeholder="Buscar productos..." />
+            <select id="filter-category">
+                <option value="">categorías</option>
+            </select>
+            <select id="sort">
+                <option value="">Ordenar por...</option>
+                <option value="price-desc">Precio ↑</option>
+                <option value="price-asc">Precio ↓</option>
+
+            </select>
+            <button id="cart-btn">🛒 Carrito (<span id="cart-count">0</span>)</button>
+        </div>
+    </header>
 </body>
 </html>
 
