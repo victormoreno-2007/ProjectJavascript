@@ -77,4 +77,26 @@ function removeFromCart(id) {
   updateCartUI();
 }
 
+function renderProducts(list) {
+  const container = $('product-list');
+  container.innerHTML = ''; // crea el container
+  list.forEach(p => { //recorre la lista de productos
+    const div = document.createElement('div');
+    div.className = 'card product';
+    div.setAttribute("data-id", p.id);// lo que va a tener el container
+    div.innerHTML = ` 
+      <img src="${p.image}" alt="${p.title}" class="product-img" />
+      <h3>${p.title}</h3>
+      <p>$${p.price}</p>
+      <p><small>${p.category}</small></p>
+      <div id= "boton">
+        <button onclick="addToCart(${p.id})">🛒 Agregar</button>
+      </div>
+    `;
+    container.appendChild(div);
+    div.querySelector(".product-img").addEventListener("click", () => { // si le da clic lo abre
+      openProductModal(p);
+    });
+  });
+}
 
