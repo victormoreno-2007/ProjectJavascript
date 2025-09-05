@@ -35,5 +35,5 @@ Este proyecto es una **tienda en línea** interactiva desarrollada con **HTML, C
   
 - Clona o descarga el repositorio en tu máquina local:
 ```bash
-    git clone https://github.com/tu-usuario/tienda-online.git
+    git clone https://github.com/victormoreno-2007/ProjectJavascript.git
 
