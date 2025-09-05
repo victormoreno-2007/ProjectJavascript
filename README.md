@@ -30,9 +30,10 @@ Este proyecto es una **tienda en línea** interactiva desarrollada con **HTML, C
 
 ## Instrucciones para ejecutar
 
-- Clona o descarga el repositorio en tu máquina local:
 
+- ejecuta el archivo index.html despues de clonar el repositorio
+  
+- Clona o descarga el repositorio en tu máquina local:
 ```bash
     git clone https://github.com/tu-usuario/tienda-online.git
-´´´
-- ejecuta el archivo index.html
+
