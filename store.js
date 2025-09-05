@@ -48,3 +48,26 @@ function updateCartUI() {
   $('cart-total').textContent = total.toFixed(2);
   $('cart-count').textContent = count; // actualiza el total y el número de productos en el botón de carrito.
 }
+
+function changeQty(id, delta) {
+  if (!cart[id]) return;
+
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) { // es la que se encarga de sumar mas ese producto o restar 
+    delete cart[id];
+  }
+  saveCart();
+  updateCartUI();
+}
+
+function addToCart(id) {
+  const p = products.find(p => p.id === id);// busca el producto en el array products
+  if (cart[id]) {           // si ya esta en el carro le aumenta la cantidad si no esta lo agrega
+    cart[id].qty++;
+  } else {
+    cart[id] = { ...p, qty: 1 };
+  }
+  saveCart();
+  updateCartUI();
+}
+
