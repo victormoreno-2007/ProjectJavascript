@@ -149,3 +149,31 @@ function setupCartToggle() {
   });
 }
 
+function setupBuyNow() {
+  $('buy-now-cart').addEventListener('click', () => {
+    if (Object.keys(cart).length === 0) { //al hacer clic en el comprar si esta vacio en la alerta muestra el mensaje
+      alert("Tu carrito está vacío.");
+      return;
+    }
+
+    let resumen = "Resumen de compra:\n";
+    let total = 0;
+
+    for (let id in cart) {
+      const p = cart[id]; //ace un resumen con todos los productos, cantidades y total y lo muestra en la alerta
+      const subtotal = p.price * p.qty;
+      resumen += `- ${p.title} x${p.qty} = $${subtotal.toFixed(2)}\n`;
+      total += subtotal;
+    }
+
+    resumen += `\nTOTAL: $${total.toFixed(2)}\n\n¡Gracias por tu compra!`;
+    alert(resumen);
+
+    // Vaciar carrito después de la compra simulada
+    cart = {};
+    saveCart();
+    updateCartUI();
+    $('cart').classList.add('hidden');
+  });
+}
+
