@@ -429,3 +429,119 @@ select {
     flex-direction: column;
     gap: 1.3rem;
 }
+@media (max-width: 1024px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    #titulo {
+        font-size: 1.8rem;
+    }
+
+    #search,
+    #filter-category,
+    #sort,
+    #cart-btn {
+        width: 100%;
+        font-size: 1rem;
+        
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    aside#cart {
+        width: 100%;
+        height: 80%;
+        bottom: 0;
+        top: auto;
+        right: 0;
+        border-left: none;
+        border-top: none;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .opcion {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    }
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .info-item {
+        justify-content: center;
+        gap: 3rem;
+    }
+
+    .logo {
+        width: 8rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #titulo {
+        font-size: 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    .card img {
+        height: 150px;
+    }
+
+    aside#cart {
+        padding: 20px;
+    }
+    .opcion {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    }
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .info-item {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .list-item {
+        align-items: center;
+    }
+
+    .item {
+        gap: 1rem;
+    }
+
+    .logo-redes {
+        width: 28px;
+        height: 28px;
+    }
+
+    .logo {
+        width: 12rem;
+    }
+}
