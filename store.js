@@ -99,4 +99,18 @@ function renderProducts(list) {
     });
   });
 }
+function setupFilters() { // set elimina duplicados
+  const categories = [...new Set(products.map(p => p.category))]; //Saca todas las categorías de los productos
+  categories.forEach(c => {
+    const opt = document.createElement('option'); // crea un option por cada categoria 
+    opt.value = c;
+    opt.textContent = c;
+    $('filter-category').appendChild(opt);
+  });
+
+  $('search').addEventListener('input', applyFilters);
+  $('filter-category').addEventListener('change', applyFilters); //Pone listeners en búsqueda, categoría y orden
+  $('sort').addEventListener('change', applyFilters);
+}
+
 
