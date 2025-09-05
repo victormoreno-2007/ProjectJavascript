@@ -177,3 +177,13 @@ function setupBuyNow() {
   });
 }
 
+async function init() {
+  setupCartToggle(); //configura abrir/cerrar carrito.
+  loadCart(); //carga el carrito del localStorage.
+  products = await fetchProducts(); //descarga productos de la API.
+  renderProducts(products);//los dibuja en pantalla.
+  setupFilters();//activa los filtros.
+  setupBuyNow();//activa el botón comprar.
+}
+
+
