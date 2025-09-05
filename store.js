@@ -177,6 +177,20 @@ function setupBuyNow() {
   });
 }
 
+const modal = document.getElementById("productModal");
+const closeBtn = document.querySelector(".close-btn");
+
+const modalImg = document.getElementById("modal-img");
+const modalTitle = document.getElementById("modal-title");
+const modalDesc = document.getElementById("modal-description");
+const modalPrice = document.getElementById("modal-price");
+const modalCategory = document.getElementById("modal-category");
+const modalRating = document.getElementById("modal-rating");
+const modalCount = document.getElementById("modal-count");
+const desc = document.getElementById("desc-producto");
+const toggleBtn = document.getElementById("toggle-desc");
+const modalAddBtn = document.getElementById("modal-add");
+
 async function init() {
   setupCartToggle(); //configura abrir/cerrar carrito.
   loadCart(); //carga el carrito del localStorage.
