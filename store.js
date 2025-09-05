@@ -113,4 +113,28 @@ function setupFilters() { // set elimina duplicados
   $('sort').addEventListener('change', applyFilters);
 }
 
+function applyFilters() {
+  let list = [...products];
+  const search = $('search').value.toLowerCase();
+  const cat = $('filter-category').value;
+  const sort = $('sort').value;
+
+  if (search) {
+    list = list.filter(p =>
+      p.title.toLowerCase().includes(search) ||
+      p.description.toLowerCase().includes(search)
+    );
+  }
+
+  if (cat) {
+    list = list.filter(p => p.category === cat);
+  }
+
+  if (sort) {
+    const [field, dir] = sort.split('-');
+    list.sort((a, b) => dir === 'asc' ? a[field] - b[field] : b[field] - a[field]);
+  }
+
+  renderProducts(list);
+}
 
