@@ -71,3 +71,10 @@ function addToCart(id) {
   updateCartUI();
 }
 
+function removeFromCart(id) {
+  delete cart[id];
+  saveCart(); // remueve los productos del carrito
+  updateCartUI();
+}
+
+
