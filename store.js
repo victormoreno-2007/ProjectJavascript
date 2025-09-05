@@ -241,3 +241,19 @@ closeBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
+// Hacer que cada imagen abra el modal
+function enableProductModals() {
+  const productCards = document.querySelectorAll("#product-list .card img");
+  productCards.forEach((img, i) => {
+    img.addEventListener("click", () => {
+      openProductModal(p); // abre el modal con el producto correspondiente
+    });
+  });
+}
+
+// Llamar después de renderizar productos
+const originalRenderProducts = renderProducts;
+renderProducts = function (list) {
+  originalRenderProducts(list);
+  enableProductModals(); // ahora cada render agrega eventos a imágenes
+};
