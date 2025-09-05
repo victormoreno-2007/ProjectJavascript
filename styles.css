@@ -326,7 +326,10 @@ aside#cart h2 {
     transition: all 0.3s ease;
     margin: 0;
 }
-
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 #buy-now-cart:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(35, 213, 171, 0.4);
@@ -377,4 +380,52 @@ aside#cart h2 {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+}
+select {
+    padding-right: 1rem;
+}
+.footer {
+    background-color:  rgba(11, 40, 133, 0.592);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+ .info-item {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+ }
+ .list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+ }
+ .list-item ul li a {
+    text-decoration: none;
+    color:  rgba(11, 40, 133, 0.592);
+ }
+.img-cart {
+    max-width: 80px;
+    max-height: 80px;
+}
+.price {
+    font-size: 1.3rem;
+    padding-right: 1rem;
+}
+
+.logo-redes {
+    width: 35px;
+    height: 35px;
+    border-radius: 1rem;
+}
+.item {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+    justify-content: center;
+}
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
 }
