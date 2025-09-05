@@ -186,4 +186,40 @@ async function init() {
   setupBuyNow();//activa el botón comprar.
 }
 
+function openProductModal(product) { // esta es la funcion que hace lo de vaer mas o menos
+  modalImg.src = product.image;
+  modalTitle.textContent = product.title;
+
+  const maxLength = 150; // límite de caracteres en descripción
+  if (product.description.length > maxLength) {
+    desc.textContent = product.description.slice(0, maxLength) + "...";
+    toggleBtn.style.display = "inline-block";
+    toggleBtn.textContent = "Ver más";
+
+    let expanded = false;
+    toggleBtn.onclick = () => {
+      if (!expanded) {
+        desc.textContent = product.description;
+        toggleBtn.textContent = "Ver menos";
+        expanded = true;
+      } else {
+        desc.textContent = product.description.slice(0, maxLength) + "...";
+        toggleBtn.textContent = "Ver más";
+        expanded = false;
+      }
+    };
+  } else {
+    desc.textContent = product.description;
+    toggleBtn.style.display = "none";
+  }
+
+  modalPrice.textContent = product.price;
+  modalCategory.textContent = product.category; // lo que se muestra
+  modalRating.textContent = product.rating.rate;
+  modalCount.textContent = product.rating.count;
+
+  currentProductId = product.id;
+  modal.style.display = "flex";
+}
+
 
