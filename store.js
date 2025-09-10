@@ -1,6 +1,6 @@
 const API = 'https://fakestoreapi.com/products';
 
-let cart = {},products = [],currentProductId = null;
+let cart = {},products = [],currentProductId = null, favorites = {};
 
 const $ = id => document.getElementById(id);
 
@@ -17,7 +17,17 @@ function loadCart() {
   cart = JSON.parse(localStorage.getItem('cart')) || {}; //lee los datos guardados y de string los convierte a objeto
   updateCartUI(); // si no hay nada guardado lo usa un objeto vacio
 }
-
+function togglefavorite(id) {
+  if(favorites[id]) {
+    delete favorites[id]
+  } else {
+    const p = products.find(p => p.id === id);
+    favorites[id] = p;
+  }
+  savefavorites();
+  updatefavorites();
+  applyFilters();
+}
 function updateCartUI() {
   const itemsContainer = $('cart-items');//
   itemsContainer.innerHTML = '';        //  limpia el contenedor del carro y comienza todo en 0
@@ -52,7 +62,67 @@ function updateCartUI() {
   $('cart-total').textContent = total.toFixed(2);
   $('cart-count').textContent = count; // actualiza el total y el número de productos en el botón de carrito.
 }
+const favoritesmodal = document.getElementById("favoritesmodal");
+const closefavorite = document.querySelector(".close-btn-favorites");
 
+function openfavoriteModal() {
+  const itemsContainer = document.getElementById("favorite-items-modal");
+  itemsContainer.innerHTML = '';
+
+  if (Object.keys(favorites).length === 0) {
+    itemsContainer.innerHTML = '';
+  } else {
+    for (let id in favorites) {
+      const p = favorites[id];
+      const li = document.createElement("li");
+      li.innerHTML = `
+      <b><strong>${p.title}/strong></b>
+      <img src="${p.image}" alt="${p.title}" class="img-cart" /> 
+      <div class = "icons">
+          <button onclick="removeFromFavorites(${id})"> ❌ </button>
+          <button onclick="addToCart(${id})"> 🛒 carrito </button>
+      </div>`;
+      itemsContainer.appendChild(li);
+    }
+  }
+  document.getElementById("favoritesmodal").style.display = "flex";
+}
+document.querySelector(".close-btn-favorite").addEventListener("click",() => {
+  document.getElementById("favoritesmodal").style.display = "none";
+});
+$("favorites-btn").addEventListener("click", openfavoriteModal);
+closefavorite.addEventListener("click",() => {
+  favoritesmodal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === favoritesmodal) {
+    favoritesmodal.style.display = "none";
+  };
+});
+
+function updatefavorites() {
+  const itemsContainer = $('favorite-items');
+  itemsContainer.innerHTML =  '';
+  let count = 0;
+  for (let id in favorites) {
+    const p = favorites[id];
+    count ++;
+    const li = document.createElement('li');
+    li.classList.add("favorite-li");
+    li.innerHTML = `<b><strong>${p.title}/strong></b>
+      <img src="${p.image}" alt="${p.title}" class="img-cart" /> 
+      <div class = "icons">
+          <button onclick="removeFromFavorites(${id})"> ❌ </button>
+          <button onclick="addToCart(${id})"> 🛒 carrito </button>
+      </div>`;
+      itemsContainer.appendChild('li');
+  }
+  if (itemsContainer.children.length === 0) {
+    itemsContainer.innerHTML = `<p>no hay favoritos</p>`
+  }
+  $('favorites-count').textContent = count;
+}
 function changeQty(id, delta) {
   if (!cart[id]) return;
 
@@ -77,8 +147,11 @@ function addToCart(id) {
 
 function removeFromCart(id) {
   delete cart[id];
-  saveCart(); // remueve los productos del carrito
+  delete favorites[id];
+  saveCart();
+  savefavorites(); // remueve los productos del carrito
   updateCartUI();
+  updatefavorites();
 }
 
 function renderProducts(list) {
