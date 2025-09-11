@@ -606,3 +606,15 @@ select {
   max-width: 120px;
   margin: 10px 0;
 }
+.fav-active {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+}
+#productModal {
+  display: none; /* oculto por defecto */
+}
+
+#productModal.active {
+  display: flex; /* visible cuando quieras mostrarlo */
+}

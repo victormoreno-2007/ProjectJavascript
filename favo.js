@@ -41,6 +41,7 @@ function togglefavorite(id) {
     }
     savefavorites();
     updatefavorites();
+    applyFilters();
 }
 function updateCartUI() {
     const itemsContainer = $('cart-items');//
@@ -178,6 +179,7 @@ function renderProducts(list) {
         const div = document.createElement('div');
         div.className = 'card product';
         div.setAttribute("data-id", p.id);// lo que va a tener el container
+        const isFavorite = favorites[p.id];
         div.innerHTML = ` 
             <img src="${p.image}" alt="${p.title}" class="product-img" />
             <h3>${p.title}</h3>
@@ -185,7 +187,10 @@ function renderProducts(list) {
             <p><small>${p.category}</small></p>
             <div id="boton">
                 <button onclick="addToCart(${p.id})">🛒 Agregar</button>
-                <button onclick="togglefavorite(${p.id})">⭐ Favorito</button>
+                <button onclick="togglefavorite(${p.id})" 
+                        class="${isFavorite ? 'fav-active' : ''}">
+                        ${isFavorite ? '❌ Quitar' : '⭐ Favorito'}
+                </button>
             </div>`;
         container.appendChild(div);
         div.querySelector(".product-img").addEventListener("click", () => { // si le da clic lo abre
@@ -360,22 +365,7 @@ closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
 });
 
-// Hacer que cada imagen abra el modal
-function enableProductModals() {
-    const productCards = document.querySelectorAll("#product-list .card img");
-    productCards.forEach((img, i) => {
-        img.addEventListener("click", () => {
-            openProductModal(p); // abre el modal con el producto correspondiente
-        });
-    });
-}
 
-// Llamar después de renderizar productos
-const originalRenderProducts = renderProducts;
-renderProducts = function (list) {
-    originalRenderProducts(list);
-    enableProductModals(); // ahora cada render agrega eventos a imágenes
-};
 
 
 
