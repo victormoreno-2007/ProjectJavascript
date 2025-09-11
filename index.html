@@ -21,6 +21,7 @@
                 <option value="price-asc">Precio ↓</option>
 
             </select>
+            <button id="favorites-btn">⭐ Favoritos (<span id="favorites-count">0</span>)</button>
             <button id="cart-btn">🛒 Carrito (<span id="cart-count">0</span>)</button>
         </div>
     </header>
@@ -32,6 +33,13 @@
             <div class="total-price">Total: $<span id="cart-total">0.00</span></div>
             <button id="buy-now-cart">💳 Comprar ahora</button>
             <button id="close-cart">Cerrar</button>
+        </aside>
+        <aside id="favoritesmodal" class="modal hidden-modal">
+            <div class="modal-content">
+                <h2>tus favoritos</h2>
+            <ul id="favorite-items"></ul>
+            <button class="close-btn-favorites">Cerrar</button>
+            </div>
         </aside>
     </main>
     <div class="modal" id="productModal">
@@ -47,6 +55,7 @@
             <button id="modal-add" class="modal-add">Agregar al carrito</button>
         </div>
     </div>
+
     <footer class="footer oculto">
         <img class="logo" src="img/logo-Fakestore.png" alt="">
         <div class="info-item">
@@ -82,7 +91,6 @@
             </div>
         </div>
     </footer>
-    <script src="store.js" defer></script>
+    <script src="favo.js" defer></script>
 </body>
 </html>
-
