@@ -4,8 +4,79 @@ let cart = {}, products = [], currentProductId = null, favorites = {};
 
 const $ = id => document.getElementById(id);
 
-function fetchProducts() {
-    return fetch(API).then(res => res.json()); // trae los productos de la api
+async function fetchProducts() {
+    const fallbackProducts = [
+        {
+            id: 1,
+            title: "Camiseta Deportiva Básica",
+            price: 25.99,
+            description: "Camiseta deportiva de alta calidad, perfecta para entrenamientos.",
+            category: "Ropa",
+            image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: { rate: 4.5, count: 120 }
+        },
+        {
+            id: 2,
+            title: "Auriculares Inalámbricos Pro",
+            price: 89.99,
+            description: "Auriculares con cancelación de ruido activa y batería de larga duración.",
+            category: "Electrónica",
+            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: { rate: 4.8, count: 250 }
+        },
+        {
+            id: 3,
+            title: "Reloj Inteligente Fit",
+            price: 150.00,
+            description: "Reloj inteligente con monitor de ritmo cardíaco y GPS integrado.",
+            category: "Electrónica",
+            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: { rate: 4.6, count: 90 }
+        },
+        {
+            id: 4,
+            title: "Mochila Urbana Resistente",
+            price: 45.00,
+            description: "Mochila con compartimento para laptop y material impermeable.",
+            category: "Accesorios",
+            image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: { rate: 4.7, count: 320 }
+        },
+        {
+            id: 5,
+            title: "Zapatillas Urbanas Clásicas",
+            price: 60.50,
+            description: "Zapatillas cómodas ideales para el día a día en la ciudad.",
+            category: "Calzado",
+            image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: { rate: 4.4, count: 150 }
+        },
+        {
+            id: 6,
+            title: "Gafas de Sol Vintage",
+            price: 20.00,
+            description: "Gafas de sol con protección UV400 y diseño retro.",
+            category: "Accesorios",
+            image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: { rate: 4.3, count: 85 }
+        }
+    ];
+
+    try {
+        const res = await fetch(API);
+        if (!res.ok) throw new Error("API falló con status " + res.status);
+        
+        // Verificamos que sea verdaderamente JSON para evitar que Cloudflare rompa el código
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("La API no devolvió un JSON válido.");
+        }
+        
+        return await res.json();
+    } catch (error) {
+        console.warn("Hubo un fallo con Fakestore API, activando modo de respaldo. Error:", error.message);
+        return fallbackProducts;
+    }
 }
 function savefavorites() {
     localStorage.setItem('favorites', JSON.stringify(favorites));
