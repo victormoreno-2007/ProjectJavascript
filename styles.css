@@ -224,6 +224,24 @@ main {
     display: none !important;
 }
 
+/* Overlay que oscurece el fondo al abrir carrito/favoritos */
+#panel-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+#panel-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+
 aside#cart {
     position: fixed;
     top: 0;
@@ -235,7 +253,7 @@ aside#cart {
     border-left: none;
     padding: 25px;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+    z-index: 1001;
     overflow-y: auto;
     border-radius: 20px 0 0 20px;
     display: flex;

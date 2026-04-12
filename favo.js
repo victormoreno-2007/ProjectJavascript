@@ -149,26 +149,37 @@ function updateCartUI() {
 }
 const favoritesmodal = document.getElementById("favoritesmodal");
 const closefavorite = document.querySelector(".close-btn-favorites");
+// ── Overlay: abre y cierra paneles laterales ──────────────────────
+const overlay = document.getElementById('panel-overlay');
+
+function openPanel(panelEl) {
+    panelEl.classList.remove('hidden-modal');
+    // pequeño delay para que la transición del overlay se vea
+    requestAnimationFrame(() => overlay.classList.add('active'));
+}
+
+function closeAllPanels() {
+    $('cart').classList.add('hidden-modal');
+    favoritesmodal.classList.add('hidden-modal');
+    overlay.classList.remove('active');
+}
+
+// click en el overlay → cierra todo
+overlay.addEventListener('click', closeAllPanels);
 
 function openfavoriteModal() {
     updatefavorites(); // renderiza con el nuevo diseño
-    favoritesmodal.classList.remove("hidden-modal");
+    openPanel(favoritesmodal);
 }
 
 // abrir modal
 $("favorites-btn").addEventListener("click", openfavoriteModal);
 
 // cerrar modal con botón
-closefavorite.addEventListener("click", () => {
-    favoritesmodal.classList.add("hidden-modal");
-});
+closefavorite.addEventListener("click", closeAllPanels);
 
-// cerrar modal clickeando fuera
-window.addEventListener("click", (e) => {
-    if (e.target === favoritesmodal) {
-        favoritesmodal.classList.add("hidden-modal");
-    }
-});
+// cerrar modal clickeando fuera → lo maneja el overlay
+
 
 function updatefavorites() {
     const itemsContainer = $('favorite-items');
@@ -288,13 +299,16 @@ function applyFilters() {
 }
 
 function setupCartToggle() {
-    $('cart-btn').addEventListener('click', () => { //abre carrito o cierra
-        $('cart').classList.toggle('hidden-modal');
+    $('cart-btn').addEventListener('click', () => {
+        const isOpen = !$('cart').classList.contains('hidden-modal');
+        if (isOpen) {
+            closeAllPanels();
+        } else {
+            openPanel($('cart'));
+        }
     });
 
-    $('close-cart').addEventListener('click', () => { // al hacer clic en el cerrar se ocuelte
-        $('cart').classList.add('hidden-modal');
-    });
+    $('close-cart').addEventListener('click', closeAllPanels);
 }
 
 function setupBuyNow() {
@@ -327,6 +341,7 @@ function setupBuyNow() {
 async function init() {
     setupCartToggle(); //configura abrir/cerrar carrito.
     loadCart(); //carga el carrito del localStorage.
+    loadfavorites(); //carga los favoritos del localStorage.
     products = await fetchProducts(); //descarga productos de la API.
     renderProducts(products);//los dibuja en pantalla.
     setupFilters();//activa los filtros.
