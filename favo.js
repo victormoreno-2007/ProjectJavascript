@@ -127,22 +127,21 @@ function updateCartUI() {
         const li = document.createElement('li');
         li.classList.add("cart-li"); // crea un li con las caracteristicas del producto
         li.innerHTML = `
-      <br>${p.title}</br> 
-      <img src="${p.image}" alt="${p.title}" class="img-cart" /> 
-      <br>- $${(p.price * p.qty).toFixed(2)}</br> 
-      <br>
-      <div class="icons">
-        <span class="price"> ${p.qty} </span>
-        <button onclick="changeQty(${id}, -1)">➖</button>
-        <button onclick="changeQty(${id}, 1)">➕</button>
-        <button onclick="removeFromCart(${id})">🗑️</button>
-      </div>
-    `;
+          <img src="${p.image}" alt="${p.title}" class="cart-img" />
+          <span class="cart-title">${p.title}</span>
+          <span class="cart-subtotal">$${(p.price * p.qty).toFixed(2)}</span>
+          <div class="cart-controls">
+            <button onclick="changeQty(${id}, -1)">&#8722;</button>
+            <span class="cart-qty">${p.qty}</span>
+            <button onclick="changeQty(${id}, 1)">&#43;</button>
+            <button class="btn-remove" onclick="removeFromCart(${id})">&#128465;</button>
+          </div>
+        `;
         itemsContainer.appendChild(li);
     }
     const cartItems = document.getElementById("cart-items");
     if (cartItems.children.length === 0) { // si esta vacio muestra este mensaje
-        cartItems.innerHTML = "<p>tu carrito esta vacio 😔, agrega un producto para comprar </p>";
+        cartItems.innerHTML = "<p>tu carrito esta vacio &#128532;, agrega un producto para comprar </p>";
     };
 
     $('cart-total').textContent = total.toFixed(2);
@@ -152,27 +151,8 @@ const favoritesmodal = document.getElementById("favoritesmodal");
 const closefavorite = document.querySelector(".close-btn-favorites");
 
 function openfavoriteModal() {
-    const itemsContainer = document.getElementById("favorite-items");
-    itemsContainer.innerHTML = '';
-
-    if (Object.keys(favorites).length === 0) {
-        itemsContainer.innerHTML = '<p>no hay favoritos</p>';
-    } else {
-        for (let id in favorites) {
-            const p = favorites[id];
-            const li = document.createElement("li");
-            li.innerHTML = `
-                <b><strong>${p.title}</strong></b>
-                <img src="${p.image}" alt="${p.title}" class="img-cart" /> 
-                <div class="icons">
-                    <button onclick="removeFromFavorites(${id})"> ❌ </button>
-                    <button onclick="addToCart(${id})"> 🛒 carrito </button>
-                </div>`;
-            itemsContainer.appendChild(li);
-        }
-    }
-
-    favoritesmodal.classList.remove("hidden-modal"); // 👈 quita el "display:none"
+    updatefavorites(); // renderiza con el nuevo diseño
+    favoritesmodal.classList.remove("hidden-modal");
 }
 
 // abrir modal
@@ -199,16 +179,18 @@ function updatefavorites() {
         count++;
         const li = document.createElement('li');
         li.classList.add("favorite-li");
-        li.innerHTML = `<b><strong>${p.title}</strong></b>
-      <img src="${p.image}" alt="${p.title}" class="img-cart" /> 
-      <div class = "icons">
-          <button onclick="removeFromFavorites(${id})"> ❌ </button>
-          <button onclick="addToCart(${id})"> 🛒 carrito </button>
-      </div>`;
+        li.innerHTML = `
+          <img src="${p.image}" alt="${p.title}" class="fav-img" />
+          <span class="fav-title">${p.title}</span>
+          <span class="fav-price">$${p.price.toFixed(2)}</span>
+          <div class="fav-controls">
+            <button class="btn-fav-cart" onclick="addToCart(${Number(id)})">&#128722; Al carrito</button>
+            <button class="btn-fav-remove" onclick="removeFromFavorites(${id})">&#10005; Quitar</button>
+          </div>`;
         itemsContainer.appendChild(li);
     }
     if (itemsContainer.children.length === 0) {
-        itemsContainer.innerHTML = `<p>no hay favoritos</p>`
+        itemsContainer.innerHTML = `<p>no hay favoritos &#128532;</p>`
     }
     $('favorites-count').textContent = count;
 }
@@ -236,11 +218,8 @@ function addToCart(id) {
 
 function removeFromCart(id) {
     delete cart[id];
-    delete favorites[id];
-    saveCart();
-    savefavorites(); // remueve los productos del carrito
+    saveCart(); // remueve los productos del carrito
     updateCartUI();
-    updatefavorites();
 }
 
 function renderProducts(list) {
@@ -315,7 +294,6 @@ function setupCartToggle() {
 
     $('close-cart').addEventListener('click', () => { // al hacer clic en el cerrar se ocuelte
         $('cart').classList.add('hidden-modal');
-        console.log('ak{sdñlfklñaksfj')
     });
 }
 
